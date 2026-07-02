@@ -101,7 +101,7 @@ Page({
     try {
       const url = await Promise.race([
         this.fetchQRCode(),
-        new Promise((_, rj) => setTimeout(() => rj('timeout'), 5000))
+        new Promise((_, rj) => setTimeout(() => rj('timeout'), 10000))
       ])
       if (url) {
         const info = await wx.getImageInfo({ src: url })
