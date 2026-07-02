@@ -1,0 +1,27 @@
+/* app.wxss */
+@import '/style/variables.wxss';
+
+page {
+  height: 100%;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* 通用按钮样式 */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-gold));
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+}

@@ -1,0 +1,13 @@
+<!-- components/progressBar/progressBar.wxml -->
+<view class="progress-bar {{isStoppageTime ? 'stoppage' : ''}}">
+  <view class="progress-period">
+    <text class="period-text">{{period}}</text>
+    <text class="count-text">{{current}}/{{total}}</text>
+  </view>
+  <view class="progress-track">
+    <view class="progress-fill" style="width: {{percent}}%"></view>
+    <view class="progress-ball" style="left: {{percent}}%">
+      <text class="ball-icon">⚽</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,60 @@
+<!-- pages/quiz/quiz.wxml -->
+<view class="page-quiz">
+  <!-- 进度区 -->
+  <view class="progress-area">
+    <view class="period-label {{isStoppageTime ? 'stoppage-text' : ''}}">{{period}} · {{current}}/{{total}}</view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+    </view>
+  </view>
+
+  <!-- 中场休息遮罩 -->
+  <view class="half-time-overlay {{showHalfTime ? 'show' : ''}}" wx:if="{{showHalfTime}}">
+    <view class="half-time-content">
+      <text class="ht-icon">⏸️</text>
+      <text class="ht-title">中场休息！</text>
+      <text class="ht-sub">你已经完成了一半！</text>
+      <text class="ht-quote">"足球应该让你站起来，不是坐着"</text>
+      <text class="ht-author">— 克鲁伊夫</text>
+      <button class="ht-btn" bindtap="continueQuiz">继续下半场 ➡️</button>
+    </view>
+  </view>
+
+  <!-- 题目 + 底部导航 -->
+  <view class="quiz-body {{animClass}}" wx:else>
+    <!-- 题目内容区（垂直居中） -->
+    <view class="quiz-content">
+      <!-- 维度标签 -->
+      <view class="dimension-tag">{{dimLabel}}</view>
+
+      <!-- 题目 -->
+      <view class="question-text">{{currentQuestion.question}}</view>
+
+      <!-- 选项A -->
+      <view class="option option-a {{selected === 'A' ? 'selected-a' : ''}}"
+            data-opt="A" bindtap="selectOption">
+        <view class="option-indicator">A</view>
+        <text class="option-text">{{currentQuestion.optionA}}</text>
+      </view>
+
+      <!-- 选项B -->
+      <view class="option option-b {{selected === 'B' ? 'selected-b' : ''}}"
+            data-opt="B" bindtap="selectOption">
+        <view class="option-indicator">B</view>
+        <text class="option-text">{{currentQuestion.optionB}}</text>
+      </view>
+    </view>
+
+    <!-- 底部导航（固定在底部） -->
+    <view class="bottom-nav">
+      <view class="nav-btn-area {{current > 1 ? '' : 'nav-hidden'}}">
+        <view class="nav-btn" bindtap="prevQuestion">← 上一题</view>
+      </view>
+      <view class="nav-progress">
+        <block wx:for="{{dots}}" wx:key="idx">
+          <view class="nav-dot {{item.filled ? 'filled' : ''}} {{item.active ? 'active' : ''}}" data-idx="{{item.idx}}" bindtap="jumpToQuestion"></view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

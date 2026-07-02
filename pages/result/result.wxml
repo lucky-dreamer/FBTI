@@ -1,0 +1,72 @@
+<!-- pages/result/result.wxml -->
+<view class="page-result">
+  <!-- 隐藏 Canvas（用于生成海报） -->
+  <canvas type="2d" id="posterCanvas" class="hidden-canvas"></canvas>
+
+  <!-- 背景烟花 -->
+  <view class="fireworks-container">
+    <view class="firework fw-1">✨</view>
+    <view class="firework fw-2">🌟</view>
+    <view class="firework fw-3">💫</view>
+    <view class="firework fw-4">⭐</view>
+    <view class="firework fw-5">🎆</view>
+  </view>
+
+  <!-- 加载态 -->
+  <view class="loading-area" wx:if="{{!star}}">
+    <text class="loading-text">正在揭晓你的球星...</text>
+    <view class="loading-ball">⚽</view>
+  </view>
+
+  <!-- 结果展示 -->
+  <view class="result-layout" wx:else>
+    <!-- 可滚动内容区 -->
+    <scroll-view class="result-scroll" scroll-y>
+      <!-- 结果标题 -->
+      <view class="result-header">
+        <text class="result-label">你的足球人格是</text>
+        <text class="result-type">{{star.mbti}}</text>
+      </view>
+
+      <!-- 球星卡 -->
+      <view class="card-area">
+        <star-card
+          name="{{star.name}}"
+          mbti="{{star.mbti}}"
+          title="{{star.title}}"
+          country="{{star.country}}"
+          description="{{star.description}}"
+          traits="{{star.traits}}"
+          quote="{{star.matchQuote}}"
+          matchRate="{{matchRate}}"
+          emoji="{{starEmoji}}"
+        />
+        <text class="card-hint">👆 点击卡片翻转看详情</text>
+      </view>
+
+      <!-- 维度详情 -->
+      <view class="dimension-detail">
+        <view class="dim-item" wx:for="{{dimensions}}" wx:key="label">
+          <text class="dim-label">{{item.label}}</text>
+          <view class="dim-bar-track">
+            <view class="dim-bar-fill" style="width: {{item.percent}}%"></view>
+          </view>
+          <text class="dim-value">{{item.value}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 按钮区（固定在底部） -->
+    <view class="action-bar">
+      <button class="btn-share" open-type="share">
+        📤 分享好友
+      </button>
+      <button class="btn-poster" bindtap="savePoster">
+        🖼️ 保存海报
+      </button>
+      <button class="btn-retry" bindtap="retryTest">
+        🔄 再测一次
+      </button>
+    </view>
+  </view>
+</view>

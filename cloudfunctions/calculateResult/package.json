@@ -1,0 +1,9 @@
+{
+  "name": "calculateResult",
+  "version": "1.0.0",
+  "description": "FBTI result calculator",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

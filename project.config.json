@@ -1,0 +1,66 @@
+{
+  "description": "FBTI - Football TI 足球人格测试",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "docs/**",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "bundle": false,
+    "userConfirmedBundleSwitch": false,
+    "urlCheck": true,
+    "scopeDataCheck": false,
+    "coverView": true,
+    "es6": true,
+    "postcss": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "autoAudits": false,
+    "newFeature": false,
+    "nodeModules": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": false,
+    "useIsolateContext": true,
+    "enhance": true,
+    "useMultiFrameRuntime": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmManually": false,
+    "enableEngp": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "useStaticServer": true,
+    "showES6CompileOption": false,
+    "checkInvalidKey": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "compileWorklet": false,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.7.10",
+  "srcMiniprogramRoot": "",
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "cloudfunctionRoot": "cloudfunctions/",
+  "condition": {},
+  "appid": "wxc509ae6ed33bbbfc",
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "getQRCode",
+  "version": "1.0.0",
+  "description": "Generate mini program QR code",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

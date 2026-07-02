@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBTI 小程序头像</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #1a1a2e;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    gap: 40px;
+    padding: 40px;
+  }
+
+  /* ====== 图标实际尺寸 144x144 ====== */
+  .icon-wrapper {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    border-radius: 72px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 2px rgba(255,215,0,0.15);
+  }
+
+  .icon-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .icon-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-preview-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .size-grid {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+  }
+
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .size-item canvas {
+    border-radius: 20%;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+
+  .size-label {
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+  }
+
+  .usage-tip {
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.8;
+    background: rgba(255,255,255,0.04);
+    padding: 20px 28px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .usage-tip strong {
+    color: #FFD700;
+  }
+</style>
+</head>
+<body>
+
+<div class="icon-preview">
+  <div class="icon-wrapper">
+    <canvas id="iconCanvas" class="icon-canvas" width="360" height="360"></canvas>
+  </div>
+  <div class="icon-preview-label">✦ FBTI 小程序图标 ✦</div>
+</div>
+
+<div class="size-grid" id="sizeGrid"></div>
+
+<div class="usage-tip">
+  <strong>💡 使用方式：</strong><br>
+  右键保存上方 360px 图标 → 上传到微信公众平台<br>
+  或截图后裁剪为 144x144 像素即可
+</div>
+
+<script>
+  const SIZE = 360;
+  const canvas = document.getElementById('iconCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function drawIcon(ctx, w, h) {
+    const cx = w / 2, cy = h / 2;
+    const R = w / 2;
+
+    // === 1. 深色绿茵基底渐变 ===
+    const bg = ctx.createRadialGradient(cx - 40, cy - 40, 20, cx, cy, R);
+    bg.addColorStop(0, '#2E7D32');
+    bg.addColorStop(0.4, '#1B5E20');
+    bg.addColorStop(0.8, '#0D3010');
+    bg.addColorStop(1, '#081A08');
+    ctx.fillStyle = bg;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fill();
+
+    // === 2. 草皮纹理（同心圆环光晕） ===
+    for (let i = 0; i < 12; i++) {
+      const r = R * (0.3 + i * 0.06);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255,255,255,${0.015 + i * 0.003})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // === 3. 金色外环 ===
+    const ringGrad = ctx.createLinearGradient(0, 0, w, h);
+    ringGrad.addColorStop(0, '#FFD700');
+    ringGrad.addColorStop(0.3, '#FFA000');
+    ringGrad.addColorStop(0.7, '#FFD700');
+    ringGrad.addColorStop(1, '#FF8F00');
+    ctx.strokeStyle = ringGrad;
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R - 10, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // 外环内侧高光线
+    ctx.strokeStyle = 'rgba(255,215,0,0.08)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R - 16, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // === 4. 足球图案（中心） ===
+    const ballR = R * 0.38;
+    const ballCx = cx, ballCy = cy - 10;
+
+    // 足球本体
+    const ballGrad = ctx.createRadialGradient(ballCx - 20, ballCy - 20, 5, ballCx, ballCy, ballR);
+    ballGrad.addColorStop(0, '#FFFFFF');
+    ballGrad.addColorStop(0.7, '#E0E0E0');
+    ballGrad.addColorStop(1, '#BDBDBD');
+    ctx.fillStyle = ballGrad;
+    ctx.beginPath();
+    ctx.arc(ballCx, ballCy, ballR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 足球阴影
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    ctx.beginPath();
+    ctx.arc(ballCx + 3, ballCy + 5, ballR * 0.9, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 足球五边形花纹
+    const pentR = ballR * 0.4;
+    const pentaCenters = [
+      { x: ballCx, y: ballCy - ballR * 0.55 },
+      { x: ballCx + ballR * 0.52, y: ballCy - ballR * 0.17 },
+      { x: ballCx + ballR * 0.32, y: ballCy + ballR * 0.45 },
+      { x: ballCx - ballR * 0.32, y: ballCy + ballR * 0.45 },
+      { x: ballCx - ballR * 0.52, y: ballCy - ballR * 0.17 }
+    ];
+
+    ctx.fillStyle = '#333';
+    pentaCenters.forEach(p => {
+      drawPentagon(ctx, p.x, p.y, pentR * 0.7);
+    });
+
+    // 中心五边形
+    drawPentagon(ctx, ballCx, ballCy, pentR * 0.5);
+    ctx.fillStyle = '#444';
+
+    // 五边形间的连线
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 1.5;
+    pentaCenters.forEach(p => {
+      ctx.beginPath();
+      ctx.moveTo(ballCx, ballCy);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    });
+
+    // === 5. 足球高光 ===
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.beginPath();
+    ctx.ellipse(ballCx - ballR * 0.25, ballCy - ballR * 0.3, ballR * 0.2, ballR * 0.12, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // === 6. 顶部星星装饰 ===
+    const starY = cy - R * 0.72;
+    ctx.font = '26px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⭐', cx, starY);
+
+    // === 7. FBTI 文字 ===
+    // "FBTI" 主标题 - 金色粗体
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const txtY = cy + ballR + 42;
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 8;
+
+    ctx.font = 'bold 44px sans-serif';
+    ctx.fillStyle = '#FFD700';
+    ctx.fillText('FBTI', cx, txtY);
+
+    ctx.shadowBlur = 0;
+
+    // 副标题
+    ctx.font = '13px sans-serif';
+    ctx.fillStyle = 'rgba(255,215,0,0.5)';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('⚽ FOOTBALL ⚽', cx, txtY + 30);
+
+    // === 8. 底部光晕 ===
+    const glowGrad = ctx.createRadialGradient(cx, cy + R * 0.3, 0, cx, cy + R * 0.3, R * 0.4);
+    glowGrad.addColorStop(0, 'rgba(255,215,0,0.05)');
+    glowGrad.addColorStop(1, 'rgba(255,215,0,0)');
+    ctx.fillStyle = glowGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy + R * 0.3, R * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawPentagon(ctx, x, y, r) {
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * 72 - 90) * Math.PI / 180;
+      const px = x + r * Math.cos(angle);
+      const py = y + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // 绘制主图
+  drawIcon(ctx, SIZE, SIZE);
+
+  // 生成不同尺寸预览
+  const sizes = [144, 96, 72, 48];
+  const grid = document.getElementById('sizeGrid');
+
+  sizes.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'size-item';
+
+    const c = document.createElement('canvas');
+    c.width = s; c.height = s;
+    const cx = c.getContext('2d');
+    cx.imageSmoothingEnabled = true;
+    cx.imageSmoothingQuality = 'high';
+
+    // 用主 canvas 缩放绘制到各尺寸
+    cx.drawImage(canvas, 0, 0, SIZE, SIZE, 0, 0, s, s);
+
+    const label = document.createElement('div');
+    label.className = 'size-label';
+    label.textContent = `${s}×${s}px`;
+
+    item.appendChild(c);
+    item.appendChild(label);
+    grid.appendChild(item);
+  });
+
+  // 输出下载功能
+  console.log('✅ FBTI 图标已渲染');
+  console.log('📐 尺寸: 360×360px (可缩放至 144×144)');
+
+  // 下载按钮功能
+  window.downloadIcon = function() {
+    const link = document.createElement('a');
+    link.download = 'fbti-icon.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  };
+</script>
+
+<div style="margin-top: -20px;">
+  <button onclick="downloadIcon()" style="
+    background: linear-gradient(135deg, #FFD700, #FF8F00);
+    color: #1B5E20;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,215,0,0.3);
+    transition: transform 0.2s;
+  ">⬇️ 下载 PNG 图标</button>
+</div>
+
+</body>
+</html>

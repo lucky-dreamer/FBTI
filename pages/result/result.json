@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "star-card": "/components/starCard/starCard"
+  },
+  "navigationBarTitleText": "你的球星人格"
+}

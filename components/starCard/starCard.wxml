@@ -1,0 +1,29 @@
+<!-- components/starCard/starCard.wxml -->
+<view class="star-card {{flipped ? 'flipped' : ''}}" bindtap="toggleFlip">
+  <!-- 正面：球星信息 -->
+  <view class="card-front">
+    <view class="card-header">
+      <text class="card-mbti">{{mbti}}</text>
+      <text class="card-country">{{country}}</text>
+    </view>
+    <view class="card-avatar">
+      <text class="avatar-placeholder">{{emoji}}</text>
+    </view>
+    <text class="card-name">{{name}}</text>
+    <text class="card-title">{{title}}</text>
+    <view class="card-match-rate">
+      <text class="rate-label">匹配度</text>
+      <text class="rate-value">{{matchRate}}%</text>
+    </view>
+  </view>
+
+  <!-- 背面：人格描述 -->
+  <view class="card-back">
+    <text class="back-title">{{name}}型人格</text>
+    <text class="back-desc">{{description}}</text>
+    <view class="back-traits">
+      <text class="trait-tag" wx:for="{{traits}}" wx:key="*this">{{item}}</text>
+    </view>
+    <text class="back-quote">"{{quote}}"</text>
+  </view>
+</view>

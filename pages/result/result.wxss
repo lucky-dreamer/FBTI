@@ -1,0 +1,203 @@
+/* pages/result/result.wxss */
+.page-result {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0D3010 0%, #1a0a00 100%);
+  position: relative;
+}
+
+/* 烟花 */
+.fireworks-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.firework {
+  position: absolute;
+  font-size: 40rpx;
+  opacity: 0;
+  animation: firework-explode 2s ease-out forwards;
+}
+
+.fw-1 { top: 10%; left: 15%; animation-delay: 0.3s; }
+.fw-2 { top: 20%; right: 20%; animation-delay: 0.6s; }
+.fw-3 { top: 35%; left: 30%; animation-delay: 0.9s; }
+.fw-4 { top: 15%; right: 35%; animation-delay: 1.2s; }
+.fw-5 { top: 30%; left: 50%; animation-delay: 1.5s; }
+
+@keyframes firework-explode {
+  0% { opacity: 1; transform: scale(0.3) rotate(0deg); }
+  50% { opacity: 0.8; transform: scale(1.5) rotate(180deg); }
+  100% { opacity: 0; transform: scale(0.5) rotate(360deg) translateY(-200rpx); }
+}
+
+/* 加载 */
+.loading-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.loading-text {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.loading-ball {
+  font-size: 80rpx;
+  animation: loadingSpin 1s infinite linear;
+}
+
+@keyframes loadingSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 结果布局 - 弹性撑开 */
+.result-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* 可滚动内容 */
+.result-scroll {
+  flex: 1;
+  padding: var(--spacing-lg) var(--spacing-lg) 0;
+}
+
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.result-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.result-type {
+  font-size: var(--font-size-xxl);
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700, #FF8F00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 8rpx;
+}
+
+/* 卡片区 */
+.card-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.card-hint {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: var(--spacing-sm);
+}
+
+/* 维度详情 */
+.dimension-detail {
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: 20rpx;
+}
+
+.dim-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.dim-label {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.dim-bar-track {
+  flex: 1;
+  height: 12rpx;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6rpx;
+  margin: 0 var(--spacing-sm);
+  overflow: hidden;
+}
+
+.dim-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #FFD700);
+  border-radius: 6rpx;
+  transition: width 1s ease;
+}
+
+.dim-value {
+  font-size: 22rpx;
+  color: var(--accent-gold);
+  width: 60rpx;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* 按钮区 - 固定在底部 */
+.action-bar {
+  display: flex;
+  padding: var(--spacing-sm) var(--spacing-lg) calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+  gap: var(--spacing-sm);
+  background: linear-gradient(0deg, #0a1a0a 0%, transparent 100%);
+  flex-shrink: 0;
+}
+
+.btn-share {
+  flex: 1;
+  background: linear-gradient(135deg, #4CAF50, #FFD700);
+  color: #1B5E20;
+  font-weight: 700;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+}
+
+.btn-poster {
+  flex: 1;
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--accent-gold);
+  font-weight: 600;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+  border: 2rpx solid rgba(255, 215, 0, 0.3);
+}
+
+.btn-retry {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+  border: 2rpx solid rgba(255,255,255,0.2);
+}
+
+/* 隐藏 Canvas */
+.hidden-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 540px;
+  height: 780px;
+}

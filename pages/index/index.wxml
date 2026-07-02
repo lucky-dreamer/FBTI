@@ -1,0 +1,54 @@
+<!-- pages/index/index.wxml -->
+<view class="page-index">
+  <!-- 背景装饰 -->
+  <view class="bg-grass"></view>
+
+  <!-- 主内容（垂直居中） -->
+  <view class="main-content">
+    <!-- 标题区 -->
+    <view class="header">
+      <view class="logo-area">
+        <text class="logo-emoji">⚽</text>
+      </view>
+      <text class="title-main">FBTI</text>
+      <text class="title-sub">FOOT BALL TI</text>
+    </view>
+
+    <!-- 副标题 -->
+    <view class="slogan-area">
+      <text class="slogan-text">MBTI已经过时，FBTI来啦^_^!</text>
+      <text class="desc-text">32道足球选择题 → 解锁你的球星人格</text>
+    </view>
+
+    <!-- 统计信息 -->
+    <view class="stats-area">
+      <view class="stat-item">
+        <text class="stat-num">32</text>
+        <text class="stat-label">道题</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">16</text>
+        <text class="stat-label">位球星</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{userCount}}</text>
+        <text class="stat-label">人已测</text>
+      </view>
+    </view>
+
+    <!-- 开始按钮 -->
+    <view class="btn-start-area">
+      <button class="btn-start" bindtap="startQuiz">
+        <text>⚽ 开始测试</text>
+      </button>
+      <text class="btn-hint">short · funny</text>
+    </view>
+  </view>
+
+  <!-- 底部声明 -->
+  <view class="footer-disclaimer">
+    <text class="disclaimer-text">隐私&声明：测试结果仅供娱乐</text>
+  </view>
+</view>

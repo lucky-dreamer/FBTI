@@ -1,0 +1,9 @@
+{
+  "name": "getStars",
+  "version": "1.0.0",
+  "description": "Get football star info",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

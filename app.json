@@ -1,0 +1,17 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/index/index",
+    "pages/quiz/quiz",
+    "pages/result/result"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1B5E20",
+    "navigationBarTitleText": "FBTI 足球人格测试",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0D3010",
+    "backgroundTextStyle": "light"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
