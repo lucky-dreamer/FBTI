@@ -319,5 +319,12 @@ Page({
   onShareAppMessage() {
     const star = this.data.star
     return { title: '我是' + star.name + '型人格！来测测你的FBTI足球人格 🔥', path: '/pages/index/index' }
+  },
+
+  onShareTimeline() {
+    const star = this.data.star
+    return {
+      title: '我是' + star.name + '型人格！⚽ FBTI 足球人格测试'
+    }
   }
 })

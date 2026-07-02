@@ -158,5 +158,18 @@ Page({
         url: '/pages/result/result?type=' + result.type + '&starId=' + result.starId + '&matchRate=' + Math.round(result.matchRate * 100)
       })
     })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '32道题测出你的世界杯球星人格！来试试 ⚽',
+      path: '/pages/index/index'
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: 'FBTI 足球人格测试 - 测测你是哪位世界杯球星'
+    }
   }
 })
