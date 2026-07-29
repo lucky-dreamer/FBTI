@@ -142,21 +142,23 @@ Page({
 
     getApp().globalData.quizResult = result
 
-    wx.showLoading({ title: '匹配球星中...' })
+    // 立即跳转到结果页（不等待服务器）
+    wx.redirectTo({
+      url: '/pages/result/result?type=' + result.type + '&starId=' + result.starId + '&matchRate=' + Math.round(result.matchRate * 100)
+    })
 
-    wx.cloud.callFunction({
-      name: 'calculateResult',
-      data: { answers: this.answers }
-    }).then(() => {
-      wx.hideLoading()
-      wx.redirectTo({
-        url: '/pages/result/result?type=' + result.type + '&starId=' + result.starId + '&matchRate=' + Math.round(result.matchRate * 100)
-      })
-    }).catch(() => {
-      wx.hideLoading()
-      wx.redirectTo({
-        url: '/pages/result/result?type=' + result.type + '&starId=' + result.starId + '&matchRate=' + Math.round(result.matchRate * 100)
-      })
+    // 异步保存记录到 VPS
+    wx.request({
+      url: 'https://mateng.site/api/saveResult',
+      method: 'POST',
+      data: {
+        type: result.type,
+        starId: result.starId,
+        matchRate: Math.round(result.matchRate * 100),
+        answers: this.answers,
+        scores: result.scores
+      },
+      fail: () => {}
     })
   },
 

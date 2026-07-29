@@ -307,12 +307,17 @@ Page({
 
   fetchQRCode() {
     return new Promise((resolve, reject) => {
-      wx.cloud.callFunction({ name: 'getQRCode' })
-        .then(r => {
-          if (r.result && r.result.code === 0 && r.result.data.tempFileURL) resolve(r.result.data.tempFileURL)
-          else reject('QR unavailable')
-        })
-        .catch(() => reject('cloud function not found'))
+      wx.request({
+        url: 'https://mateng.site/api/getQRCode',
+        success: (res) => {
+          if (res.data && res.data.code === 0 && res.data.data.tempFileURL) {
+            resolve(res.data.data.tempFileURL)
+          } else {
+            reject('QR unavailable')
+          }
+        },
+        fail: () => reject('network error')
+      })
     })
   },
 
