@@ -60,10 +60,9 @@ app.get('/api/getQRCode', async (req, res) => {
     const filePath = path.join(DATA_DIR, 'qrcodes', fileName)
     await fs.outputFile(filePath, wxRes.data)
 
-    // 返回可访问的 URL
-    const protocol = req.protocol
+    // 返回可访问的 URL（强制 https，微信要求必须 https + 白名单域名）
     const host = req.get('host')
-    const url = `${protocol}://${host}/qrcodes/${fileName}`
+    const url = `https://${host}/qrcodes/${fileName}`
 
     res.json({ code: 0, data: { tempFileURL: url } })
   } catch (err) {
